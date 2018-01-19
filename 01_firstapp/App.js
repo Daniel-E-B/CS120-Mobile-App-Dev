@@ -1,33 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, TouchableOpacity } from 'react-native';
+
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     console.log("constructing");
     this.submitName = this.submitName.bind(this);
-    this.state = {color: "#0077ff", input: ""};
-    this.displayText="";
+    this.state = {color: "#0077ff", input: "", displayText: " ", displayName: ""};
   }
 
   submitName() {
     console.log('Click happened');
-
+    if(this.state.input.length>2){
     this.setState(
       {
         displayText: "Welcome, "+this.state.input,
+        displayName: this.state.input
       }
     );
+    }
   }
+
   render() {
     return (
       <View style={styles.container}>
-      <Text style={{fontSize:18}}>
+        <Text style={{fontSize:18, margin: 10}}>
         {this.state.displayText}
-      </Text>
-        <Image source={require('./GitHub-Mark.png')} style={{width: 400, height: 400}}/>
+        </Text>
+        <TouchableOpacity style={{backgroundColor:"#0077ff", borderRadius:15, padding:10}}>
+          <Text>This is a touchable opacity {this.state.displayName}</Text>
+        </TouchableOpacity>
+        <Image source={require('./GitHub-Mark.png')} style={{ margin: 50, width: 200, height: 200}}/>
         <TextInput
-          style={{height: 40, width: 250}}
+          style={{margin: 20, height: 40, width: 250}}
           placeholder="Enter your name"
           onChangeText={(input) => this.setState({input: input})}
         />
@@ -36,9 +42,6 @@ export default class App extends React.Component {
           title="Submit"
           color={this.state.color} 
         />
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
       </View>
     );
   }
