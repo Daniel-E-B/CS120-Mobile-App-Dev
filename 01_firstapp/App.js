@@ -7,8 +7,7 @@ export default class App extends React.Component {
     super(props);
     console.log("constructing");
     this.submitName = this.submitName.bind(this);
-    this.nextScreen=this.nextScreen.bind(this);
-    this.state = {color: "#0077ff", input: "", displayText: " ", displayName: "", screenNum: 0};
+    this.state = {color: "#0077ff", input: "", displayText: " ", displayName: ""};
   }
 
   submitName() {
@@ -23,12 +22,8 @@ export default class App extends React.Component {
     }
   }
 
-  nextScreen(){
-
-  }
-
   render() {
-    if(this.state.screenNum===0){
+
     return (
       <View style={styles.container}>
         <Text style={{fontSize:18, margin: 10}}>
@@ -48,20 +43,20 @@ export default class App extends React.Component {
           title="Submit"
           color={this.state.color} 
         />
-      <TouchableOpacity style={{backgroundColor:"#000000", borderRadius:2, margin: 10, left:145}}
-        onPress={this.nextScreen}>
-        <Text style={{color:"#ffffff", fontSize:24}}> > </Text>
+      <TouchableOpacity style={{backgroundColor:"#ffffff", margin: 10, left:145}}
+        onPress={null}>
+        <Text style={{color:"#ffffff", fontSize:36,padding:4}}>  ➡️  </Text>
       </TouchableOpacity>
       </View>
     );
-  }
+  
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00ffff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
