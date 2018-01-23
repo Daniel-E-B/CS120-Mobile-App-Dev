@@ -44,9 +44,11 @@ export default class App extends React.Component {
           color={this.state.color} 
         />
       <TouchableOpacity style={{backgroundColor:"#ffffff", margin: 10, left:145}}
+
         onPress={null}>
         <Text style={{color:"#ffffff", fontSize:36,padding:4}}>  ➡️  </Text>
-      </TouchableOpacity>
+     </TouchableOpacity>	      
+
       </View>
     );
   
