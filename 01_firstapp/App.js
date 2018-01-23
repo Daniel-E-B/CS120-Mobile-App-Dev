@@ -42,6 +42,10 @@ export default class App extends React.Component {
           title="Submit"
           color={this.state.color} 
         />
+      <TouchableOpacity style={{backgroundColor:"#ffffff", margin: 10, left:145}}
+       onPress={null}>
+               <Text style={{color:"#ffffff", fontSize:36,padding:4}}>  ➡️  </Text>
+     </TouchableOpacity>	      
       </View>
     );
   }
@@ -50,7 +54,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00ffff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
