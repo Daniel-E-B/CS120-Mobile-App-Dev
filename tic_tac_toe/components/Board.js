@@ -5,7 +5,8 @@ import {
     Text,
     Button
   } from 'react-native';
-  import React, { Component } from 'react';
+import React, { Component } from 'react';
+import Piece from './Piece';
   
 const {width, height} = require('Dimensions').get('window');
 const SIZE = 3; // 3-by-3 grid for Tic-Tac-Toe
@@ -17,6 +18,35 @@ export default class Board extends Component {
     constructor() {
         super();
         this.renderBoard = this.renderBoard.bind(this);
+        this.updatePosition = this.updatePosition.bind(this);
+        this.state = {
+            lastPlaced: '',
+            gamePositions: [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', ''],
+            ]
+       }
+    }
+
+    updatePosition(row, col) {
+        // the below line makes a copy of this.state.gamePositions
+        let newPositions = Object.assign({}, this.state.gamePositions);
+        let toPlace = this.state.lastPlaced == 'X' ? 'O' : 'X'
+        let currentPiece = newPositions[row][col];
+        if (currentPiece == '') {
+            // since currentPiece is an empty string '', we can put down a piece
+            newPositions[row][col] = toPlace
+
+            this.setState({
+                gamePositions: newPositions,
+                lastPlaced: toPlace
+            })
+        } else {
+            // there's already a piece there so we can't put anything down.
+            // so this function should just return nothing.
+            return null
+        }
     }
 
     renderBoard () {
@@ -32,10 +62,11 @@ export default class Board extends Component {
 
             let square = 
             <View key={square_key} style={[styles.square, position]}>
-                <TouchableOpacity onPress={() => {}} >
-                    <Text>{square_key}</Text>
+                <TouchableOpacity onPress={(e) => this.updatePosition(row, col)} style={styles.squareButton} >
+                    <Piece pieceType={this.state.gamePositions[row][col]} />
+                    {/* <Text>hello{this.state.gamePositions[row][col]}</Text> */}
                 </TouchableOpacity>
-                </View>
+            </View>
             result.push(square);
 
           }
@@ -92,5 +123,11 @@ square: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#BEE1D2'
+},
+squareButton: {
+    width:SQUARE_SIZE,
+    height:SQUARE_SIZE,
+    alignItems:'center',
+    top:20
 }
 });
