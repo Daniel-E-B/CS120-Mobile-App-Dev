@@ -3,7 +3,8 @@ import {
     View,
     TouchableOpacity,
     Text,
-    Button
+    Button, 
+    Image
   } from 'react-native';
 import React, { Component } from 'react';
 import Piece from './Piece';
@@ -25,7 +26,8 @@ export default class Board extends Component {
                 ['', '', ''],
                 ['', '', ''],
                 ['', '', ''],
-            ]
+            ], 
+            gameOver:false
        }
     }
 
@@ -64,7 +66,6 @@ export default class Board extends Component {
             <View key={square_key} style={[styles.square, position]}>
                 <TouchableOpacity onPress={(e) => this.updatePosition(row, col)} style={styles.squareButton} >
                     <Piece pieceType={this.state.gamePositions[row][col]} />
-                    {/* <Text>hello{this.state.gamePositions[row][col]}</Text> */}
                 </TouchableOpacity>
             </View>
             result.push(square);
@@ -77,12 +78,38 @@ export default class Board extends Component {
     }
 
     render () {
+
+        let currentPlayer = '';
+    
+        if (this.state.lastPlaced == "X") {
+            currentPlayer = "O"
+        } else if (this.state.lastPlaced == "O") {
+            currentPlayer = "X"
+        } else {
+            currentPlayer = "X"
+        }
+        
+        //if the board is full, give gameover
+        let filledSquares = 0;
+        for(let i = 0; i < this.state.gamePositions.length; i++){
+            for(let j = 0; j < this.state.gamePositions[i].length; j++){
+                if(this.state.gamePositions[i][j]!==''){
+                    filledSquares++
+                }
+            }
+        }
+        if(filledSquares=this.state.gamePositions.length*this.state.gamePositions[0].length){
+            //this.setState({gameOver: true})
+        }
+
         return (
         <View style={styles.container}>
-        	<Text style={styles.instructionText}> This is the board </Text>
+            <Text style={styles.instructionText}> Tic Tac Toe </Text>
             {this.renderBoard()}
+            {!this.state.gameOver && <Text style={[styles.instructionText, {marginTop: 100}]}>Current Player: {currentPlayer}</Text>}
+            <Image source = {require('../images/icon.png')} style={{position: 'absolute', top: 15, width: 82, height: 128}}/>
         </View>
-        )
+          )
     }
 }
 
@@ -90,7 +117,7 @@ const styles = StyleSheet.create({
 container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#644B62',
+    backgroundColor: '#c4e6ff',
     alignItems: 'center',
     justifyContent: 'center',
 },
@@ -102,7 +129,7 @@ instructionText: {
     justifyContent: 'space-around',
     alignItems: 'center',
     top: 150,
-    color: 'white',
+    color: '#FDFDFF',
     fontSize: 20,
     fontWeight: 'bold'
 },
@@ -118,11 +145,11 @@ square: {
     width: SQUARE_SIZE,
     height: SQUARE_SIZE,
     borderRadius: BORDER_RADIUS,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: 'transparent',
+    borderWidth: 6,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#BEE1D2'
+    backgroundColor: '#85bdde',
 },
 squareButton: {
     width:SQUARE_SIZE,
