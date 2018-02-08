@@ -21,6 +21,9 @@ export default class Board extends Component {
         this.renderBoard = this.renderBoard.bind(this);
         this.updatePosition = this.updatePosition.bind(this);
         this.restartGame = this.restartGame.bind(this);
+        this.gameOver = this.gameOver.bind(this);
+        this.checkWin = this.checkWin.bind(this);
+        this.invertPlayer = this.invertPlayer.bind(this);
         this.state = {
             lastPlaced: '',
             gamePositions: [
@@ -28,12 +31,15 @@ export default class Board extends Component {
                 ['', '', ''],
                 ['', '', ''],
             ],
-            gameOver: false
         }
     }
 
     restartGame() {
         this.setState({ gamePositions: [['', '', ''], ['', '', '',], ['', '', '',]], gameOver: false, lastPlaced: '' })
+    }
+
+    invertPlayer() {
+        return this.state.lastPlaced == 'X' ? 'X' : 'O'
     }
 
     updatePosition(row, col) {
@@ -82,6 +88,44 @@ export default class Board extends Component {
         return result;
     }
 
+    gameOver() {
+        //if the board is full, give gameover
+        let filledSquares = 0
+        for (let i = 0; i < SIZE; i++) {
+            for (let j = 0; j < SIZE; j++) {
+                if (this.state.gamePositions[i][j] != '') {
+                    filledSquares++
+                }
+            }
+        }
+        return filledSquares == SIZE * SIZE ? true : false
+    }
+
+    checkWin() {
+        let arrayCheck = this.state.gamePositions
+        for (let i = 0; i < SIZE; i++) {
+            if (arrayCheck[i][0] == arrayCheck[i][1] && arrayCheck[i][0] == arrayCheck[i][2] && arrayCheck[i][0] != '') {
+                return true
+            }
+        }
+
+        for (let i = 0; i < SIZE; i++) {
+            if (arrayCheck[0][i] == arrayCheck[1][i] && arrayCheck[0][i] == arrayCheck[2][i] && arrayCheck[0][i] != '') {
+                return true
+            }
+        }
+
+        if (arrayCheck[0][0] == arrayCheck[1][1] && arrayCheck[0][0] == arrayCheck[2][2] && arrayCheck[0][0] != '') {
+            return true
+        }
+
+        if (arrayCheck[0][2] == arrayCheck[1][1] && arrayCheck[0][2] == arrayCheck[2][0] && arrayCheck[0][2] != '') {
+            return true
+        }
+
+        return false;
+    }
+
     render() {
 
         let currentPlayer = '';
@@ -94,31 +138,21 @@ export default class Board extends Component {
             currentPlayer = "X"
         }
 
-        //if the board is full, give gameover
-        let filledSquares = 0;
-        for (let i = 0; i < this.state.gamePositions.length; i++) {
-            for (let j = 0; j < this.state.gamePositions[i].length; j++) {
-                if (this.state.gamePositions[i][j] !== '') {
-                    filledSquares++
-                }
-            }
-        }
-        if (filledSquares = this.state.gamePositions.length * this.state.gamePositions[0].length) {
-            //this.setState({gameOver: true})
-        }
-
         return (
             <View style={styles.container}>
-                <Text style={styles.instructionText}> Tic Tac Toe </Text>
+                <Text style={styles.instructionText}>Tic Tac Toe</Text>
                 {this.renderBoard()}
-                {!this.state.gameOver && <Text style={[styles.instructionText, { marginTop: 100 }]}>Current Player: {currentPlayer}</Text>}
+                {!this.gameOver() && !this.checkWin() && <Text style={[styles.instructionText, { marginTop: 100 }]}>Current Player: {currentPlayer}</Text>}
+                {this.checkWin() && <Text style={[styles.instructionText, { marginTop: 100 }]}>{this.invertPlayer()} won</Text>}
+                {!this.checkWin() && this.gameOver() && <Text style={[styles.instructionText, { marginTop: 100 }]}>Draw</Text>}
                 <Image source={require('../images/icon.png')} style={{ position: 'absolute', top: 15, width: 82, height: 128 }} />
-                <Button
-                    title="Restart Game"
-                    onPress={this.restartGame}
-                    color="#85bdde"
-                    style={styles.restartButton}
-                />
+                <View style={styles.restartButton}>
+                    <Button
+                        title="Restart Game"
+                        onPress={this.restartGame}
+                        color="#85bdde"
+                    />
+                </View>
             </View>
         )
     }
@@ -133,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     restartButton: {
-        top: 0,
+        bottom: 30,
     },
     instructionText: {
         flex: 1,
