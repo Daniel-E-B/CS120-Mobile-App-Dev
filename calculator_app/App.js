@@ -87,6 +87,10 @@ export default class ReactCalculator extends Component {
           selectedSymbol: null
         });
         break;
+      case 'CLEAR':
+        this.setState({inputValue: 0});
+        break;
+
     }
   }
 
