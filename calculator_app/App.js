@@ -13,7 +13,7 @@ const inputButtons = [
   [4, 5, 6, '*'],
   [7, 8, 9, '-'],
   [0, '.', '=', '+'],
-  ['CLEAR']
+  ['C', 'CE']
 ];
 
 export default class ReactCalculator extends Component {
@@ -87,10 +87,15 @@ export default class ReactCalculator extends Component {
           selectedSymbol: null
         });
         break;
-      case 'CLEAR':
-        this.setState({inputValue: 0});
+      case 'CE':
+        this.setState({inputValue: 0, previousInputValue: 0, selectedSymbol: null});
         break;
-
+      case 'C':
+        this.setState({inputValue:0});
+        break;
+      case '.':
+        //decimal functionality
+        break;
     }
   }
 
