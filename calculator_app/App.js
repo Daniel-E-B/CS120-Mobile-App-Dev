@@ -24,7 +24,8 @@ export default class ReactCalculator extends Component {
     this.state = {
       previousInputValue: 0,
       inputValue: 0,
-      selectedSymbol: null
+      selectedSymbol: null,
+      decimalPlace: 1
     }
   }
 
@@ -61,7 +62,19 @@ export default class ReactCalculator extends Component {
   }
 
   _handleStringInput(str) {
+    if (this.state.selectedSymbol == '/' && this.state.inputValue == 0) {
+      this.setState({
+        inputValue: "Divide By 0 Error", selectedSymbol: null, previousInputValue: 0
+      });
+      return;
+    }
+
     switch (str) {
+      case '.':
+        this.setState({
+          decimalPlace: this.state.decimalPlace * 10
+        })
+        break;
       case '/':
       case '*':
       case '+':
@@ -69,7 +82,7 @@ export default class ReactCalculator extends Component {
         this.setState({
           selectedSymbol: str,
           previousInputValue: this.state.inputValue,
-          inputValue: 0
+          inputValue: 0,
         });
         break;
       case '=':
@@ -84,26 +97,30 @@ export default class ReactCalculator extends Component {
         this.setState({
           previousInputValue: 0,
           inputValue: eval(previousInputValue + symbol + inputValue),
-          selectedSymbol: null
+          selectedSymbol: null,
+          decimalPlace: 1
         });
         break;
       case 'CE':
-        this.setState({inputValue: 0, previousInputValue: 0, selectedSymbol: null});
+        this.setState({ inputValue: 0, previousInputValue: 0, selectedSymbol: null, decimalPlace: 1 });
         break;
       case 'C':
-        this.setState({inputValue:0});
-        break;
-      case '.':
-        //decimal functionality
+        this.setState({ inputValue: 0, decimalPlace: 1 });
         break;
     }
   }
 
   _handleNumberInput(num) {
-    let inputValue = (this.state.inputValue * 10) + num;
-
+    // if (this.state.decimalPlace == 1) {
+    //   let inputValue = (this.state.inputValue * 10) + num;
+    // }
+    // else{
+    //   let inputValue = this.state.inputValue + (num / this.state.decimalPlace);
+    // }
+    let inputValue = (this.state.inputValue*10) + num/this.state.decimalPlace;
     this.setState({
-      inputValue: inputValue
+      inputValue: inputValue,
+      // decimalPlace: this.state.decimalPlace * 10 TODO: do this when there is already a decimal
     })
   }
 
