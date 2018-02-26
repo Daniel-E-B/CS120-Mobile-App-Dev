@@ -71,9 +71,11 @@ export default class ReactCalculator extends Component {
 
     switch (str) {
       case '.':
-        this.setState({
-          decimalPlace: this.state.decimalPlace * 10
-        })
+        if (this.state.decimalPlace >= 1) {
+          this.setState({
+            decimalPlace: 0.1
+          });
+        }
         break;
       case '/':
       case '*':
@@ -83,6 +85,7 @@ export default class ReactCalculator extends Component {
           selectedSymbol: str,
           previousInputValue: this.state.inputValue,
           inputValue: 0,
+          decimalPlace: 1
         });
         break;
       case '=':
@@ -111,17 +114,18 @@ export default class ReactCalculator extends Component {
   }
 
   _handleNumberInput(num) {
-    // if (this.state.decimalPlace == 1) {
-    //   let inputValue = (this.state.inputValue * 10) + num;
-    // }
-    // else{
-    //   let inputValue = this.state.inputValue + (num / this.state.decimalPlace);
-    // }
-    let inputValue = (this.state.inputValue*10) + num/this.state.decimalPlace;
-    this.setState({
-      inputValue: inputValue,
-      // decimalPlace: this.state.decimalPlace * 10 TODO: do this when there is already a decimal
-    })
+    let inputValue = this.state.inputValue + num * this.state.decimalPlace;
+    if(this.state.decimalPlace>=1){
+     this.setState({
+       inputValue: inputValue,
+       decimalPlace: this.state.decimalPlace * 10
+     })
+    }else{
+      this.setState({
+        inputValue: inputValue,
+        decimalPlace: this.state.decimalPlace / 10
+      })
+    }
   }
 
   render() {
@@ -141,7 +145,5 @@ export default class ReactCalculator extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center'
   }
 })
