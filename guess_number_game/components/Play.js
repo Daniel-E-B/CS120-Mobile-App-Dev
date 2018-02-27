@@ -5,6 +5,7 @@ import {
     Text,
     View
 } from 'react-native';
+import styles from './Style';
 
 export default class Play extends Component {
     constructor(props) {
@@ -13,8 +14,9 @@ export default class Play extends Component {
         }
     }
     render() {
-        return ({
-
-        })
+        return (
+            <View style={styles.container}>
+            </View>
+        )
     }
 }
