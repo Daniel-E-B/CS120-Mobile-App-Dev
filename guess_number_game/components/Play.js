@@ -27,14 +27,9 @@ export default class Play extends Component {
                     <TextInput
                         style={styles.startTextEntry}
                         onChangeText={(value) => this.setState({ minVal: value })}
-                        placeholder="Minimum Value"
+                        placeholder="Guess"
                         keyboardType="numeric" />
-                    <TextInput
-                        style={styles.startTextEntry}
-                        onChangeText={(value) => this.setState({ maxVal: value })}
-                        placeholder="Maximum Value"
-                        keyboardType="numeric" />
-                    <Button title="Play" onPress={startGame} />
+                    <Text>whether your guess was too high or low</Text>{/*centered, nicely formatted, etc*/}
                 </View >
             </View>
         )
