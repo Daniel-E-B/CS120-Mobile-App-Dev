@@ -6,6 +6,7 @@ import {
     View,
     TextInput,
     Button,
+    Image
 } from 'react-native';
 import styles from './Style';
 
@@ -26,6 +27,7 @@ export default class Start extends Component {
     render() {
         return (
             <View style={styles.container}>
+            <Image source={require('../assets/images/youwin.gif')} />
                 <Text style={styles.title}>Guess Number Game</Text>
                 <Text style={[styles.title, styles.smallTitle]}>Enter the maximum and minimum integers</Text>
                 <View style={[styles.container, styles.guessBox]}>
