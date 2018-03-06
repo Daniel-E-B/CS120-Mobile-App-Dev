@@ -6,6 +6,7 @@ import {
     View,
     TextInput,
     Button,
+    WebView
 } from 'react-native';
 import styles from './Style';
 
@@ -48,7 +49,7 @@ export default class Play extends Component {
                 <Text style={styles.title}>Guess Number Game</Text>
                 <Text style={[styles.title, styles.smallTitle]}>Guess the number between {this.state.minVal} and {this.state.maxVal}</Text>
                 <View style={[styles.container, styles.guessBox]}>
-                    {!this.state.won &&<Text>Guesses: {this.state.guesses}</Text>}
+                    {!this.state.won && <Text>Guesses: {this.state.guesses}</Text>}
                     {!this.state.won && <TextInput
                         style={styles.startTextEntry}
                         onChangeText={(value) => this.setState({ guess: value })}
@@ -56,9 +57,12 @@ export default class Play extends Component {
                         keyboardType="numeric" />}
                     {!this.state.won && <Text>your guess was {this.state.hiLo ? "too high" : "too low"}</Text>}{/*centered, nicely formatted, etc*/}
                     {!this.state.won && <Button title="guess" onPress={makeGuess} />}
-                    <Text>hiLo: {this.state.hiLo} number: {this.state.number} guess: {this.state.guess} </Text>
-                    <Text>won: {this.state.won}</Text>
-                    {this.state.won &&<Image source={require('../assets/images/youwin.gif')} />}
+                    {this.state.won && <WebView
+                        source={{ uri: 'https://raw.githubusercontent.com/Daniel-E-B/CS120-Mobile-App-Dev/master/guess_number_game/assets/images/youwin.gif' }}
+                        style={{ width: 256, height: 256, marginBottom: 60 }}
+                    />}
+                    {/* couldn't do an image view for the gif, so I had to do it this janky way */}
+                    {this.state.won && <Button title="play again implement me" onPress={this.makeGuess} />}
                 </View >
             </View>
         )
