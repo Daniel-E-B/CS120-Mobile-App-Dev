@@ -14,6 +14,7 @@ export default class Play extends Component {
     constructor(props) {
         super(props);
         makeGuess = this.makeGuess.bind(this)
+        restart = this.restart.bind(this)
         this.state = {
             minVal: this.props.minVal,
             maxVal: this.props.maxVal,
@@ -43,6 +44,10 @@ export default class Play extends Component {
         })
     }
 
+    restart() {
+        this.props.update(true)
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -62,7 +67,7 @@ export default class Play extends Component {
                         style={{ width: 256, height: 256, marginBottom: 60 }}
                     />}
                     {/* couldn't do an image view for the gif, so I had to do it this janky way */}
-                    {this.state.won && <Button title="play again implement me" onPress={this.makeGuess} />}
+                    {this.state.won && <Button title="Play Again" onPress={restart} />}
                 </View >
             </View>
         )
