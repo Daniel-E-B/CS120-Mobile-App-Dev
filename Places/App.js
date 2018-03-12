@@ -1,23 +1,44 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { TabNavigator } from 'react-navigation';
+import PlaceMap from './components/PlaceMap';
+import AddPlace from './components/AddPlace';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default class App extends React.Component {
+// Create the component and store it in a variable
+const TabNav = TabNavigator(
+  {
+    FavoritePlaces: { screen: PlaceMap },
+    AddPlace: { screen: AddPlace },
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: 'white',
+      inactiveTintColor: 'gray',
+    },
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'FavoritePlaces') {
+          let suffix = focused == true ? '' : '-outline';
+          iconName = 'ios-map' + suffix;
+
+        } else if (routeName === 'AddPlace') {
+          let suffix = focused == true ? '' : '-outline';
+          iconName = 'ios-add-circle' + suffix;
+        }
+        //The icons don't do anything on android, and the tab navigator looks all funny
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      }
+    }),
+  }
+)
+
+export default class App extends Component {
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+    return(
+      <TabNav />
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
