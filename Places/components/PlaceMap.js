@@ -15,7 +15,7 @@ export default class PlaceMap extends Component {
                     longitudeDelta: 0.05,
                     mapType: 'standard',
                     title: "Nueva School"
-                }}>>
+                }}>
                     <Marker
                     key="nuevaschool"
                     title="The Nueva School"
