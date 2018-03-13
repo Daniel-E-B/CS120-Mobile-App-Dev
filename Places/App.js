@@ -35,9 +35,9 @@ const TabNav = TabNavigator(
 )
 
 export default class App extends Component {
-
   constructor() {
     super();
+    this.updateMarkers=this.updateMarkers.bind(this);
     this.state = ({
       markers: [
         {
@@ -48,6 +48,12 @@ export default class App extends Component {
         },
       ]
     });
+  }
+
+  updateMarkers(marker) {
+    this.setState({
+      markers: this.state.markers.push(marker),
+    })
   }
 
   render() {
