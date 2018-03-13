@@ -36,9 +36,28 @@ const TabNav = TabNavigator(
 
 export default class App extends Component {
 
+  constructor() {
+    super();
+    this.state = ({
+      markers: [
+        {
+          latitude: 0,
+          longitude: 0,
+          title: "",
+          description: "",
+        },
+      ]
+    });
+  }
+
   render() {
-    return(
-      <TabNav />
+    return (
+      <TabNav
+      screenProps={{
+        markers: this.state.markers
+        //accessed in any subcomponent? by this.props.screenProps.prop_
+      }}
+      />
     )
   }
 }
