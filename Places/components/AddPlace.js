@@ -5,7 +5,17 @@ export default class AddPlace extends Component {
 
   constructor() {
     super();
+    this.addPlace = this.addPlace.bind(this);
     this.state = { latitude: 0, longitude: 0, title: "", description: "", }
+  }
+
+  addPlace() {
+    let marker = {
+      longitude: parseFloat(this.state.longitude),
+      latitude: parseFloat(this.state.latitude),
+      title: this.state.title,
+      description: this.state.description
+    }
   }
 
   render() {
@@ -36,8 +46,8 @@ export default class AddPlace extends Component {
         </View>
         <View style={styles.button}>
           <Button
-            onPress={() => { }}
-            title="Add Marker"
+            onPress={this.addPlace}
+            title="Add Place"
 
           />
         </View>
