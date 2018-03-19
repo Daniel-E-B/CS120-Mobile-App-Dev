@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 import PlaceMap from './components/PlaceMap';
 import AddPlace from './components/AddPlace';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// Create the component and store it in a variable
 const TabNav = TabNavigator(
   {
     FavoritePlaces: { screen: PlaceMap },
@@ -12,9 +12,12 @@ const TabNav = TabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: 'white',
+      activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
     },
+    // ********************** //
+    // below is the code you need to add //
+    // ********************** //
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
@@ -27,7 +30,10 @@ const TabNav = TabNavigator(
           let suffix = focused == true ? '' : '-outline';
           iconName = 'ios-add-circle' + suffix;
         }
-        //The icons don't do anything on android, and the tab navigator looks all funny
+
+        // You can return any component that you like here! We usually use an
+        // icon component from react-native-vector-icons
+        // You can see the full list of icons here: https://ionicframework.com/docs/ionicons/
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       }
     }),
@@ -35,35 +41,9 @@ const TabNav = TabNavigator(
 )
 
 export default class App extends Component {
-  constructor() {
-    super();
-    this.updateMarkers=this.updateMarkers.bind(this);
-    this.state = ({
-      markers: [
-        {
-          latitude: 0,
-          longitude: 0,
-          title: "",
-          description: "",
-        },
-      ]
-    });
-  }
-
-  updateMarkers(marker) {
-    this.setState({
-      markers: this.state.markers.push(marker),
-    })
-  }
-
   render() {
     return (
-      <TabNav
-      screenProps={{
-        markers: this.state.markers
-        //accessed in any subcomponent? by this.props.screenProps.prop_
-      }}
-      />
+      <TabNav />
     )
   }
 }
