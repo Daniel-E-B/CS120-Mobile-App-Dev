@@ -45,11 +45,25 @@ export default class App extends Component {
     super();
     this.state = {
       markers: [],
-    }
+    };
+    this.updateMarkers = this.updateMarkers.bind(this);
+  }
+
+  updateMarkers(marker) {
+    let stateMarkers = this.state.markers.slice();
+    stateMarkers.push(marker);
+    this.setState({
+      markers: stateMarkers
+    });
   }
   render() {
     return (
-      <TabNav screenProp={{ markers: this.state.markers }} />
+      <TabNav
+        screenProp={{ 
+          markers: this.state.markers, 
+          update: this.updateMarkers,
+        }}
+      />
     )
   }
 }
