@@ -16,6 +16,7 @@ export default class AddPlace extends Component {
       title: this.state.title,
       description: this.state.description
     }
+    this.props.screenProps.update(marker);
   }
 
   render() {
@@ -48,7 +49,6 @@ export default class AddPlace extends Component {
           <Button
             onPress={this.addPlace}
             title="Add Place"
-
           />
         </View>
       </View>

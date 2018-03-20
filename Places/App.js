@@ -41,7 +41,7 @@ export default class App extends Component {
   render() {
     return (
       <TabNav
-        screenProp={{
+        screenProps={{
           markers: this.state.markers,
           update: this.updateMarkers,
         }}
