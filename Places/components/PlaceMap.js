@@ -5,9 +5,32 @@ import MapView, { Marker } from 'react-native-maps';
 
 export default class PlaceMap extends Component {
 
+  constructor() {
+    super();
+    this.renderMarkers = this.renderMarkers.bind(this);
+  }
+
+  renderMarkers() {
+    var markerList = [];
+    this.props.screenProps.markers.forEach(element => {
+      markerList.push(
+        <Marker
+          key={Math.random()}
+          title={element.title}
+          description={element.description}
+          coordinate={{
+            latitude: element.latitude,
+            longitude: element.longitude
+          }}
+        />
+      );
+    });
+    return markerList;
+  }
   render() {
     return (
-      <MapView style={styles.map}
+      // { this.renderMarkers() }
+      < MapView style={styles.map}
         mapType="satellite"
         initialRegion={{
           latitude: 38.897902,
@@ -16,8 +39,10 @@ export default class PlaceMap extends Component {
           longitudeDelta: 0.005,
           mapType: 'standard',
           title: "Casablanca"
-        }}>
-      </MapView>
+        }
+        }>
+        {this.renderMarkers()}
+      </MapView >
     )
   }
 }

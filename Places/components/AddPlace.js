@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
   button: {
     padding: 12,
     borderRadius: 6,
-    flex: 1
+    flex: 1,
+    marginTop: 70.
   },
   textInputShort: {
     height: 40,
