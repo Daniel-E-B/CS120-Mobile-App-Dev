@@ -28,19 +28,26 @@ export default class PlaceMap extends Component {
     return markerList;
   }
   render() {
+    var startingPlace = {
+      latitude: 38.897902,
+      longitude: -77.036508,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
+    }
+    if (this.props.screenProps.markers.length > 1) {
+      let place = this.props.screenProps.markers[this.props.screenProps.markers.length - 1];
+      startingPlace = {
+        latitude: place.latitude,
+        longitude: place.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      }
+    }
+    console.log(startingPlace)
     return (
-      // { this.renderMarkers() }
       < MapView style={styles.map}
         mapType="satellite"
-        initialRegion={{
-          latitude: 38.897902,
-          longitude: -77.036508,
-          latitudeDelta: 0.005,
-          longitudeDelta: 0.005,
-          mapType: 'standard',
-          title: "Casablanca"
-        }
-        }>
+        region={startingPlace}>
         {this.renderMarkers()}
       </MapView >
     )
